@@ -1,0 +1,49 @@
+{
+  "title": "Heliogarden — GPU Field Study",
+  "stack": "PlayCanvas 2.23.0 + WebGPU / WebGL2 + Vite 8.3.2",
+  "backend": "WebGPU preferred; WebGL2 automatic fallback, both tested in isolated Chrome",
+  "techniques": [
+    "Hardware-instanced crystal garden and animated pollen, capped at 17,580 procedural instances",
+    "Nested animated gyroscopic reactor and six orbiting light carriers",
+    "Clustered dynamic lighting with directional and two moving point-light shadow maps",
+    "HDR bloom, ACES tone mapping, SSAO, distance fog and vignette",
+    "Fixed native HiDPI by default; opt-in adaptive resolution and explicit manual recovery"
+  ],
+  "limitations": [
+    "Wall-frame timing, not GPU timestamps; shared GPU and browser scheduling affect FPS",
+    "CPU-simulated instance-buffer particles, no compute simulation or hardware ray tracing",
+    "Raster shadow maps; no ray-traced reflections",
+    "Touch orbit supported; touch pinch zoom is not implemented",
+    "Quick tunnel URL is temporary and changes on restart"
+  ],
+  "localUrl": "http://127.0.0.1:5173",
+  "publicUrl": "https://precise-amp-arcade-colin.trycloudflare.com",
+  "runCommand": "npm ci && npm run dev",
+  "buildCommand": "npm run build",
+  "testSummary": "Build passed. Original scene preserved and isolated Chrome verified uncapped native HiDPI: CSS1440×960 at DPR2 yields2880×1920 at default and max complexity, fixed100%, adaptive off. Full exhibition suite also passed with zero browser errors. Prior original controls/complexity/backend tests are retained in evidence/test-results.json; updated native checks and screenshot are in evidence/exhibition/. Test browser closed.",
+  "status": "ready",
+  "persistentSessions": {
+    "server": 58927,
+    "tunnel": 99171
+  },
+  "tunnelRestartCommand": "./scripts/tunnel.sh",
+  "defaultResolution": {
+    "scale": 1,
+    "pixelRatio": "native window.devicePixelRatio (uncapped)",
+    "adaptive": false,
+    "backingFormula": "round(CSS width × devicePixelRatio × scale) × round(CSS height × devicePixelRatio × scale)",
+    "retinaTest": {
+      "cssWidth": 1440,
+      "cssHeight": 960,
+      "deviceScaleFactor": 2,
+      "expectedWidth": 2880,
+      "expectedHeight": 1920
+    },
+    "manual50AtRetinaTest": {
+      "width": 1440,
+      "height": 960
+    }
+  },
+  "defaultComplexity": 35,
+  "lastVerified": "2026-10-05"
+}

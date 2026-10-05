@@ -1,0 +1,37 @@
+{
+  "status": "passed",
+  "buildCommand": "npm ci && npm run build",
+  "artifactDirectory": "dist/",
+  "publishUnder": "playcanvas/",
+  "expectedSiteBase": "/eval-gpu/playcanvas/",
+  "testCommand": "npm run test:static",
+  "manualPreviewCommand": "npm run preview:subpath",
+  "evidence": "evidence/static-subpath/test-results.json",
+  "testedBackends": [
+    "WebGPU",
+    "WebGL2"
+  ],
+  "nativeRetinaBacking": "2880x1920 at 1440x960 CSS / DPR2",
+  "errors": {
+    "console": 0,
+    "runtime": 0,
+    "requests": 0,
+    "http": 0,
+    "outsideMount": 0
+  },
+  "modifiedFiles": [
+    "vite.config.js",
+    "index.html",
+    "src/main.js",
+    "src/exhibition.js",
+    "package.json",
+    ".gitignore",
+    "README.md"
+  ],
+  "addedScripts": [
+    "scripts/static-preview.mjs",
+    "scripts/static-subpath-test.mjs"
+  ],
+  "manifestUrlsChanged": false,
+  "existingServices": "Local5173 and existing public tunnel returnHTTP200; temporary5183 test server and isolated browser closed."
+}

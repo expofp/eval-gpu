@@ -1,0 +1,56 @@
+{
+  "title": "Lattice \u2014 GPU Observatory",
+  "stack": "Rust 1.89 / Bevy 0.16.1 / wgpu / wasm-bindgen 0.2.100",
+  "backend": "WebGPU (BrowserWebGpu; no WebGL fallback)",
+  "techniques": [
+    "Custom WGSL PBR spectral interference and animated emissive bands",
+    "Procedural faceted crystal field and kinetic orbital rings",
+    "Directional shadow map, two colored point lights, HDR bloom, tone mapping and distance fog",
+    "Bounded ECS spawning and adaptive render resolution"
+  ],
+  "limitations": [
+    "CPU-driven animation; no custom compute or ray tracing",
+    "Browser RAF wall-frame timing, no GPU timestamps or draw-call measurement",
+    "One shadow-casting directional light; point lights do not cast shadows",
+    "WebGPU required; 50% adaptive resolution floor cannot guarantee frame rate",
+    "Retained hidden crystal allocations when complexity decreases"
+  ],
+  "localUrl": "http://127.0.0.1:5174",
+  "publicUrl": "https://memorial-billing-integral-coat.trycloudflare.com",
+  "runCommand": "npm start",
+  "buildCommand": "bash scripts/setup.sh && npm run build",
+  "testSummary": "PASS after native HiDPI correction: actual 2880x1920 backing at 1440x960 CSS / DPR2, fixed 100%, adaptive OFF at default and 6049 crystals. Manual 50%=1440x960. Core selection, orbit/pan/zoom/reset, freeze, shader toggle, max/low recovery and explicit opt-in adaptive mode passed. Zero browser/engine errors or failed requests. Exhibition scene switch and native backing preservation passed. Unsupported-WebGPU explanation and public tunnel verified. Evidence: tests/results.json and tests/exhibition-results.json.",
+  "status": "ready",
+  "evidence": [
+    "tests/results.json",
+    "tests/default.png",
+    "tests/high.png",
+    "tests/interference-on.png",
+    "tests/interference-off.png",
+    "tests/compatibility.json",
+    "tests/tunnel-headers.txt",
+    "tests/tunnel-wasm-headers.txt"
+  ],
+  "screenshot": "tests/default.png",
+  "tunnelRestartCommand": "bash scripts/tunnel.sh",
+  "defaultResolution": {
+    "scale": 1,
+    "pixelRatio": "native window.devicePixelRatio (uncapped)",
+    "adaptive": false,
+    "backingFormula": "round(CSS width * devicePixelRatio) \u00d7 round(CSS height * devicePixelRatio)",
+    "verifiedCssViewport": [
+      1440,
+      960
+    ],
+    "verifiedDevicePixelRatio": 2,
+    "verifiedBacking": [
+      2880,
+      1920
+    ],
+    "manual50PercentBacking": [
+      1440,
+      960
+    ]
+  },
+  "defaultComplexity": 35
+}

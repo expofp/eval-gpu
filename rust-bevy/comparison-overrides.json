@@ -1,0 +1,8 @@
+{
+  "source": "Explicit user correction superseding exhibition-spec.json resolution defaults",
+  "resolutionScale": 1,
+  "pixelRatio": "native window.devicePixelRatio, uncapped",
+  "adaptiveResolution": false,
+  "backingWidth": "round(CSS viewport width * devicePixelRatio * resolutionScale)",
+  "backingHeight": "round(CSS viewport height * devicePixelRatio * resolutionScale)"
+}

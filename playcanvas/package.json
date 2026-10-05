@@ -1,0 +1,22 @@
+{
+  "name": "heliogarden-gpu",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 5173 --strictPort",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 5173 --strictPort",
+    "test": "node scripts/test.mjs",
+    "test:exhibition": "node scripts/exhibition-test.mjs",
+    "preview:subpath": "node scripts/static-preview.mjs",
+    "test:static": "npm run build && node scripts/static-subpath-test.mjs"
+  },
+  "dependencies": {
+    "playcanvas": "2.23.0",
+    "vite": "8.3.2"
+  },
+  "devDependencies": {
+    "playwright": "1.58.2"
+  }
+}

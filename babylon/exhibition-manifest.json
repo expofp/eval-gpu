@@ -1,0 +1,42 @@
+{
+  "title": "EXPO / City Pavilion",
+  "stack": "Babylon.js 9.29.0 + Vite 8.3.2 + JavaScript",
+  "backend": "WebGPU with WebGL2 fallback",
+  "techniques": [
+    "Nine-part thin-instanced human figures with animated limbs and aisle graph motion",
+    "Dijkstra destination routing over obstacle-checked aisle edges with corner-facility detours",
+    "Day/night illumination, real-time PCF shadows, emissive windows and HDR bloom",
+    "Projected readable destination labels, furnished exhibits, 32-building city and animated traffic"
+  ],
+  "limitations": [
+    "Crowd motion and matrix animation are CPU driven; people may overlap one another",
+    "Wall-frame timings are not GPU timestamp measurements",
+    "Projected labels use screen-space UI; overhead map is near-vertical perspective",
+    "One fixed 2048px directional shadow map; hall point lights do not cast additional shadows",
+    "Quick tunnel is temporary and requires persistent local processes",
+    "WebGL1 fallback is not verified"
+  ],
+  "localUrl": "http://127.0.0.1:5171/?scene=exhibition",
+  "publicUrl": "https://resolved-hardwood-harold-spare.trycloudflare.com/?scene=exhibition",
+  "defaultResolution": {
+    "mode": "fixed",
+    "scale": 1,
+    "pixelRatio": "native devicePixelRatio (uncapped)",
+    "adaptive": false,
+    "formula": "round(CSS dimension * devicePixelRatio)"
+  },
+  "defaultPeople": 120,
+  "maxPeople": 1200,
+  "testSummary": "Production build passed. Isolated Chrome at 1440x960 CSS and DPR 2 verified native WebGPU and forced WebGL2, 2880x1920 backing at default 120 and maximum 1,200 people, fixed 100% with adaptive OFF. Manual 50% produced 1440x960. All 30 destinations reachable with obstacle-free routes; blocked crowd edges: 0. Day/night, overhead map, orbit/pan/zoom, projected-label selection, pause, 24-person minimum and walking animation passed. Original scene default/max native HiDPI also passed. No console/page errors. Both scenes passed live resize and DPR-change checks. Evidence: artifacts/exhibition-tests.json and artifacts/hidpi-label-tests.json. Static production artifacts passed under /eval-gpu/babylon/: both scene links, native WebGPU and forced WebGL2, native DPR 2 at default/max, route/night controls, all assets including compiler WASM inside prefix, zero request/HTTP/console/page errors.",
+  "status": "running-tested",
+  "runCommand": "npm ci && npm run dev",
+  "buildCommand": "npm run build",
+  "staticHosting": {
+    "base": "./",
+    "outputDirectory": "dist",
+    "testedPrefix": "/eval-gpu/babylon/",
+    "testCommand": "npm run test:static",
+    "testEvidence": "artifacts/static-subpath-tests.json",
+    "status": "ready"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "browser-gpu-lab",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node scripts/serve.mjs",
+    "start:all": "node scripts/start-all.mjs",
+    "build": "node scripts/build-pages.mjs",
+    "assemble:pages": "node scripts/build-pages.mjs --assemble-only",
+    "test:pages": "node scripts/check-pages.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

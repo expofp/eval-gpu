@@ -1,0 +1,145 @@
+{
+  "version": 1,
+  "sceneQuery": "?scene=exhibition",
+  "title": "EXPO / City Pavilion",
+  "units": "meters; Y up, X east, Z north",
+  "floor": {
+    "width": 90,
+    "depth": 64,
+    "height": 0
+  },
+  "walls": {
+    "height": 5,
+    "thickness": 0.4,
+    "cutawayDefault": true
+  },
+  "booths": {
+    "centerX": [
+      -33,
+      -21,
+      -9,
+      9,
+      21,
+      33
+    ],
+    "centerZ": [
+      -20,
+      -8,
+      8,
+      20
+    ],
+    "width": 8,
+    "depth": 8,
+    "height": 3.2,
+    "count": 24
+  },
+  "entry": {
+    "x": 0,
+    "z": -32,
+    "width": 12,
+    "label": "SOUTH ENTRANCE"
+  },
+  "exit": {
+    "x": 0,
+    "z": 32,
+    "width": 10,
+    "label": "NORTH EXIT"
+  },
+  "cafes": [
+    {
+      "x": -34,
+      "z": 27,
+      "width": 14,
+      "depth": 6,
+      "label": "CAFÉ NORTH"
+    },
+    {
+      "x": 34,
+      "z": -27,
+      "width": 14,
+      "depth": 6,
+      "label": "CAFÉ SOUTH"
+    }
+  ],
+  "toilets": [
+    {
+      "x": 34,
+      "z": 27,
+      "width": 12,
+      "depth": 6,
+      "label": "WC / ACCESSIBLE"
+    },
+    {
+      "x": -34,
+      "z": -27,
+      "width": 12,
+      "depth": 6,
+      "label": "WC"
+    }
+  ],
+  "information": {
+    "x": -14,
+    "z": -28,
+    "label": "INFORMATION"
+  },
+  "walkways": {
+    "horizontalZ": [
+      -27,
+      -14,
+      0,
+      14,
+      27
+    ],
+    "verticalX": [
+      -42,
+      0,
+      42
+    ]
+  },
+  "city": {
+    "roadsAtX": [
+      -58,
+      58
+    ],
+    "roadsAtZ": [
+      -46,
+      46
+    ],
+    "boundsWidth": 180,
+    "boundsDepth": 140,
+    "baseBuildings": 32
+  },
+  "camera": {
+    "position": [
+      85,
+      95,
+      -105
+    ],
+    "target": [
+      0,
+      0,
+      0
+    ],
+    "verticalFovDegrees": 45
+  },
+  "defaults": {
+    "complexity": 35,
+    "people": 120,
+    "resolutionScale": 1,
+    "pixelRatio": "native devicePixelRatio",
+    "adaptiveResolution": false,
+    "night": false,
+    "autoOrbit": false
+  },
+  "peopleCountFormula": "round(24 + 1176 * pow(complexity/100, 2.39)) — 24 at zero, approximately 120 at 35, 1200 at 100",
+  "commonRequirements": [
+    "identical floor plan and booth count",
+    "people actually follow aisle paths without walking through booths",
+    "click destination to highlight stand or amenity and display walkable route from entry",
+    "day/night toggle",
+    "orbit/pan/zoom plus top-down map view",
+    "visible FPS, wall-frame ms, actual backing resolution and active crowd count",
+    "full native HiDPI backing resolution by default: CSS dimensions times devicePixelRatio, no automatic scale reductions",
+    "preserve original scene, add easy switching between original and exhibition"
+  ]
+}

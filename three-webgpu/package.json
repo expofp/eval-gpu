@@ -1,0 +1,22 @@
+{
+  "name": "pelagic-observatory",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 5172 --strictPort",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 5172 --strictPort",
+    "test": "node test.mjs",
+    "test:exhibition": "node test-exhibition.mjs",
+    "preview:static": "node scripts/static-preview.mjs",
+    "test:static": "npm run build && node test-static.mjs"
+  },
+  "dependencies": {
+    "three": "0.186.1"
+  },
+  "devDependencies": {
+    "playwright": "1.58.2",
+    "vite": "7.3.6"
+  }
+}

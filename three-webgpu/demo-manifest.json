@@ -1,0 +1,77 @@
+{
+  "title": "PELAGIC — GPU Observatory",
+  "stack": "Three.js 0.186.1 / TSL / Vite 7.3.6",
+  "backend": "WebGPU primary; automatic WebGL2 fallback; ?webgl forces fallback",
+  "techniques": [
+    "TSL analytic ocean displacement with analytic normals and emissive interference bands",
+    "WebGPU compute orbital particle field; TSL vertex equivalent on WebGL2",
+    "Procedural plasma and Fresnel emission with HDR bloom",
+    "Shadow mapping, metallic gyroscopic rings, animated instanced satellites, raycast selection",
+    "Bounded quadratic complexity ramp and adaptive render resolution"
+  ],
+  "limitations": [
+    "Wall-frame timing only; no GPU timestamps",
+    "Analytic particle field, not fluid physics",
+    "Opaque water approximation; no ray tracing or reflection pass",
+    "Only directional light casts shadows; point lights provide unshadowed colored illumination",
+    "Counts include shadow and post passes",
+    "Quick tunnel requires running process and changes URL on restart"
+  ],
+  "localUrl": "http://127.0.0.1:5172",
+  "publicUrl": "https://satisfied-partner-bizarre-anchor.trycloudflare.com",
+  "runCommand": "npm ci && npm run build && npm run preview",
+  "buildCommand": "npm run build",
+  "testSummary": "PASS after native HiDPI correction: preserved original WebGPU scene at 1440x960 CSS / deviceScaleFactor 2 renders exactly 2880x1920 at default and max load, fixed 100%, adaptive OFF. Manual 50% gives 1440x960. Resize to 1202x802 gives 2404x1604; live DPR change to 1.25 gives rounded 1503x1003. Scene links work; no console/page errors. See artifacts/exhibition/test-results.json. Static subpath PASS: both scenes tested from dist at /eval-gpu/three-webgpu/ using strict port5182 file server (no SPA rewrite). 20 browser requests all HTTP200; zero console/request errors. Scene links, direct exhibition query, night, route/picking, WebGL2, 2880x1920 Retina backing at default/max, and manual half resolution passed.",
+  "status": "complete-running",
+  "processSessions": {
+    "server": 24875,
+    "tunnel": 48952
+  },
+  "evidence": [
+    "artifacts/test-results.json",
+    "artifacts/default.png",
+    "artifacts/high.png",
+    "artifacts/webgl.png",
+    "artifacts/tunnel-headers.txt",
+    "artifacts/mobile.png",
+    "artifacts/public-assets.json",
+    "artifacts/public-browser.json",
+    "artifacts/exhibition/test-results.json",
+    "artifacts/static-subpath/results.json"
+  ],
+  "defaultResolution": {
+    "scale": 1,
+    "pixelRatio": "native devicePixelRatio, uncapped",
+    "adaptive": false,
+    "rounding": "round(CSS dimension * devicePixelRatio * scale)",
+    "comparisonCSSViewport": [
+      1440,
+      960
+    ],
+    "comparisonDeviceScaleFactor": 2,
+    "expectedBackingSize": [
+      2880,
+      1920
+    ],
+    "verifiedBackingSize": [
+      2880,
+      1920
+    ]
+  },
+  "defaults": {
+    "complexity": 35,
+    "resolutionScale": 1,
+    "pixelRatio": "native",
+    "adaptiveResolution": false
+  },
+  "staticHosting": {
+    "status": "ready-for-parent-deployment",
+    "base": "./",
+    "publishDirectory": "dist",
+    "testedMount": "/eval-gpu/three-webgpu/",
+    "buildCommand": "npm ci && npm run build",
+    "testCommand": "npm run test:static",
+    "evidence": "artifacts/static-subpath/results.json",
+    "notes": "Copy only dist contents into the site three-webgpu directory. Original local/public URLs intentionally unchanged."
+  }
+}

@@ -1,0 +1,6 @@
+node_modules/
+dist/
+.pages-preview/
+artifacts/
+tunnel.log
+tunnel-url.txt

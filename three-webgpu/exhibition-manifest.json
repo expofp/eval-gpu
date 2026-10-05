@@ -1,0 +1,91 @@
+{
+  "title": "EXPO / City Pavilion",
+  "stack": "Three.js 0.186.1 / TSL / Vite 7.3.6",
+  "backend": "WebGPU primary; automatic WebGL2 fallback; &webgl forces WebGL2",
+  "techniques": [
+    "Detailed 24-stand open-roof pavilion and 32-building city with procedural furniture, products, signs, street furniture and animated cars",
+    "Instanced articulated human crowd with CPU aisle graph traversal and animated limbs/bob",
+    "Dijkstra destination routing, animated TSL route, destination highlighting and overhead map",
+    "Day/night lighting with real-time directional shadows, six night point lights, emissive windows, TSL entrance scans and HDR bloom"
+  ],
+  "limitations": [
+    "Wall-frame measurements only; no GPU timestamps",
+    "CPU crowd path traversal with GPU instanced rendering; no person-to-person collision avoidance",
+    "Only directional light casts shadows; point lights are unshadowed",
+    "Entrance beams are additive cone meshes, not volumetric scattering",
+    "Overhead map uses top-down perspective rather than orthographic projection",
+    "Amenity routes terminate outside facility footprints; no indoor facility routing",
+    "Fixed 100% mode preserves all rendering work; bounded load and opt-in manual/adaptive resolution provide recovery",
+    "Temporary public URL depends on the existing cloudflared process"
+  ],
+  "localUrl": "http://127.0.0.1:5172/?scene=exhibition",
+  "publicUrl": "https://satisfied-partner-bizarre-anchor.trycloudflare.com/?scene=exhibition",
+  "defaultResolution": {
+    "scale": 1,
+    "pixelRatio": "native devicePixelRatio, uncapped",
+    "adaptive": false,
+    "rounding": "round(CSS dimension * devicePixelRatio * scale)",
+    "comparisonCSSViewport": [
+      1440,
+      960
+    ],
+    "comparisonDeviceScaleFactor": 2,
+    "expectedBackingSize": [
+      2880,
+      1920
+    ],
+    "verifiedBackingSize": [
+      2880,
+      1920
+    ]
+  },
+  "defaultPeople": 120,
+  "maxPeople": 1200,
+  "defaults": {
+    "complexity": 35,
+    "night": false,
+    "autoOrbit": false,
+    "cameraPosition": [
+      85,
+      95,
+      -105
+    ],
+    "cameraTarget": [
+      0,
+      0,
+      0
+    ],
+    "verticalFovDegrees": 45,
+    "resolutionScale": 1,
+    "pixelRatio": "native",
+    "adaptiveResolution": false
+  },
+  "testSummary": "PASS after native HiDPI correction: production build; isolated Chrome 1440x960 CSS / DPR2 gives 2880x1920 backing at default 120 people, max 1200 and synthetic pressure, fixed 100%/adaptive OFF. Manual 50% gives 1440x960. Both scenes pass resize and live fractional DPR changes with exact rounded sizes. 31 routes and 42660 aisle samples avoid booth/facility interiors. All 1200 walkers moved. Actual pointer picking, orbit/pan/zoom, overhead/reset, day/night, motion/wall/bloom toggles passed. WebGPU and WebGL2 default/max rendered with zero errors. Updated day/night/max screenshots inspected. Original preserved; test browser closed. Static subpath PASS: both scenes tested from dist at /eval-gpu/three-webgpu/ using strict port5182 file server (no SPA rewrite). 20 browser requests all HTTP200; zero console/request errors. Scene links, direct exhibition query, night, route/picking, WebGL2, 2880x1920 Retina backing at default/max, and manual half resolution passed.",
+  "status": "complete-running",
+  "runCommand": "npm ci && npm run build && npm run preview",
+  "buildCommand": "npm run build",
+  "testCommand": "npm run test:exhibition",
+  "evidence": [
+    "artifacts/exhibition/test-results.json",
+    "artifacts/exhibition/day.png",
+    "artifacts/exhibition/night.png",
+    "artifacts/exhibition/max.png",
+    "artifacts/exhibition/route-map.png",
+    "artifacts/exhibition/details.png",
+    "artifacts/exhibition/webgl.png",
+    "artifacts/exhibition/original-preserved.png",
+    "artifacts/exhibition/tunnel-headers.txt",
+    "artifacts/exhibition/public-browser.json",
+    "artifacts/static-subpath/results.json"
+  ],
+  "staticHosting": {
+    "status": "ready-for-parent-deployment",
+    "base": "./",
+    "publishDirectory": "dist",
+    "testedMount": "/eval-gpu/three-webgpu/",
+    "buildCommand": "npm ci && npm run build",
+    "testCommand": "npm run test:static",
+    "evidence": "artifacts/static-subpath/results.json",
+    "notes": "Copy only dist contents into the site three-webgpu directory. Original local/public URLs intentionally unchanged."
+  }
+}

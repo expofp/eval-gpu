@@ -1,0 +1,49 @@
+{
+  "title": "EXPO / City Pavilion",
+  "stack": "PlayCanvas Engine 2.23.0 + Vite 8.3.2",
+  "backend": "WebGPU preferred, WebGL2 fallback",
+  "techniques": [
+    "Shared 90×64m open-roof pavilion: 24 furnished booths, cafes, toilets, entry/exit, information,32 city buildings and streets",
+    "Hardware-instanced articulated human crowd:13 body parts per person, CPU aisle-following walk cycles,24–1200 visitors",
+    "Dijkstra destination routes over an obstacle-safe aisle graph with corner facility detours and animated amber flow markers",
+    "Day/night lighting: directional shadows, two shadowed pavilion spots,14 local night lights, emissive windows, HDR bloom, ACES and SSAO",
+    "Native HiDPI fixed100% default, orthographic map, orbit/pan/zoom, exterior cutaway and manual resolution recovery"
+  ],
+  "limitations": [
+    "CPU crowd simulation, no compute simulation or person-to-person collision avoidance",
+    "Wall-frame timing includes CPU/GPU/scheduling; no GPU timestamps or hardware ray tracing",
+    "Route distances are graph estimates; not an accessibility certification",
+    "HTML projected map labels; touch pinch zoom not implemented",
+    "Quick tunnel is temporary and changes when restarted"
+  ],
+  "localUrl": "http://127.0.0.1:5173/?scene=exhibition",
+  "publicUrl": "https://precise-amp-arcade-colin.trycloudflare.com/?scene=exhibition",
+  "defaultResolution": {
+    "scale": 1,
+    "pixelRatio": "native window.devicePixelRatio (uncapped)",
+    "adaptive": false,
+    "backingFormula": "round(CSS width × devicePixelRatio × scale) × round(CSS height × devicePixelRatio × scale)",
+    "retinaTest": {
+      "cssWidth": 1440,
+      "cssHeight": 960,
+      "deviceScaleFactor": 2,
+      "expectedWidth": 2880,
+      "expectedHeight": 1920
+    },
+    "manual50AtRetinaTest": {
+      "width": 1440,
+      "height": 960
+    }
+  },
+  "defaultPeople": 120,
+  "maxPeople": 1200,
+  "defaultComplexity": 35,
+  "defaultNight": false,
+  "peopleCountFormula": "round(24 + 1176 * pow(complexity/100, 2.39))",
+  "runCommand": "npm ci && npm run dev",
+  "buildCommand": "npm run build",
+  "testCommand": "npm run test:exhibition",
+  "testSummary": "Build and isolated Chrome suite passed with zero browser errors. CSS1440×960 at DPR2 gives2880×1920 at default120 walkers and max1200; fixed100%, adaptive off. Manual50%=1440×960. Viewport resize and live DPR2→1.5→2 checks passed. Exact camera/FOV,24 booths,31 obstacle-safe destination routes, every crowd edge, click selection, route display, animated people, orbit/pan/zoom/reset, map, night/day, pause, wall controls and WebGL2 fallback verified. Original scene native default/max tests also passed. Day/night/max/map/detail screenshots inspected. Public query HTTP200. Evidence: evidence/exhibition/test-results.json. Test browser closed. Orthographic label visibility regression fixed and verified.",
+  "status": "ready",
+  "lastVerified": "2026-10-05"
+}

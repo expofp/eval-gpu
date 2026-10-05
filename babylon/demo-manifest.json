@@ -1,0 +1,43 @@
+{
+  "title": "HELIOS \u2014 Orbital Foundry",
+  "stack": "Babylon.js 9.29.0 + Vite 8.3.2 + JavaScript",
+  "backend": "Native WebGPU with automatic WebGL2/WebGL1 fallback; WebGPU and forced WebGL2 verified in Chrome",
+  "techniques": [
+    "Analytic sphere intersection and 20\u201364-step fragment-shader plasma volume integration",
+    "300\u201324,000 thin-instanced orbiting polyhedra",
+    "Procedural cubemap PBR reflections",
+    "Animated magnetic gimbals, four lights and directional PCF shadows",
+    "CPU billboard particles, HDR bloom, ACES and FXAA",
+    "Adaptive 50\u2013100% CSS resolution with manual override"
+  ],
+  "limitations": [
+    "Wall-frame timing, not GPU timestamp timing",
+    "Particles are CPU simulated; no compute or hardware ray tracing",
+    "Reflections use a static generated cubemap, not live scene reflections",
+    "Triangle estimate excludes shadow, particle and post-processing passes",
+    "Work is capped; minimum resolution does not guarantee frame rate",
+    "TryCloudflare URL is temporary and requires running local sessions",
+    "Observed frame rates on a shared machine are not controlled benchmark results"
+  ],
+  "localUrl": "http://127.0.0.1:5171",
+  "publicUrl": "https://resolved-hardwood-harold-spare.trycloudflare.com",
+  "runCommand": "npm ci && npm run dev",
+  "buildCommand": "npm run build",
+  "testSummary": "Production build passed. Original scene preserved with native uncapped HiDPI, fixed 100% and adaptive OFF. In isolated Chrome at 1440x960 CSS / DPR 2, default and maximum 24,000-instance scene both kept 2880x1920 canvas backing. Manual 50% produced 1440x960. Resize to 1200x800 CSS produced 2400x1600; live DPR 1.5 produced 2160x1440. Zero console/page errors in combined native HiDPI regression. Evidence: artifacts/exhibition-tests.json; original-fixed100.png. Earlier reactor WebGL2 fallback and interaction checks passed in artifacts/test.log. Static production artifacts passed under /eval-gpu/babylon/: both scene links, native WebGPU and forced WebGL2, native DPR 2 at default/max, route/night controls, all assets including compiler WASM inside prefix, zero request/HTTP/console/page errors.",
+  "status": "running-tested",
+  "defaultResolution": {
+    "mode": "fixed",
+    "scale": 1,
+    "pixelRatio": "native devicePixelRatio (uncapped)",
+    "adaptive": false,
+    "formula": "round(CSS dimension * devicePixelRatio)"
+  },
+  "staticHosting": {
+    "base": "./",
+    "outputDirectory": "dist",
+    "testedPrefix": "/eval-gpu/babylon/",
+    "testCommand": "npm run test:static",
+    "testEvidence": "artifacts/static-subpath-tests.json",
+    "status": "ready"
+  }
+}

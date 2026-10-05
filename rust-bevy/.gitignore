@@ -1,0 +1,15 @@
+.tools/
+target/
+node_modules/
+.DS_Store
+# Generated runtime, private diagnostics and local preview; rebuilt by CI.
+web/pkg/
+logs/
+.pages-preview/
+public-url.txt
+tests/*.png
+tests/*.json
+tests/*.html
+tests/*headers.txt
+tests/initial-run/
+tests/pre-hidpi/

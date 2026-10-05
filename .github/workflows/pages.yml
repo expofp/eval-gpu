@@ -1,0 +1,64 @@
+name: Deploy GPU Lab to Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: |
+            babylon/package-lock.json
+            three-webgpu/package-lock.json
+            playcanvas/package-lock.json
+            rust-bevy/package-lock.json
+      - uses: actions/cache@v4
+        with:
+          path: |
+            rust-bevy/.tools
+            rust-bevy/target
+          key: bevy-linux-${{ runner.arch }}-${{ hashFiles('rust-bevy/Cargo.lock', 'rust-bevy/scripts/setup.sh', 'rust-bevy/rust-toolchain.toml') }}
+      - name: Install JavaScript engines
+        run: |
+          npm ci --prefix babylon
+          npm ci --prefix three-webgpu
+          npm ci --prefix playcanvas
+      - name: Set up pinned Rust and WASM toolchain
+        run: bash rust-bevy/scripts/setup.sh
+      - name: Build all eight scenes
+        run: npm run build
+      - name: Verify Pages artifact
+        run: npm run test:pages
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/configure-pages@v5
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

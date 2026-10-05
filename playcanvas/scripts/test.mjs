@@ -1,0 +1,23 @@
+import { chromium } from 'playwright';
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+const browser=await chromium.launch({executablePath:process.env.CHROME_PATH||'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true,args:['--enable-unsafe-webgpu']});
+const page=await browser.newPage({viewport:{width:1440,height:1000},deviceScaleFactor:1});const errors=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
+const evidence={checks:[],samples:{},errors};const sample=async name=>{const s=await page.evaluate(()=>({...window.demoState,frames:undefined}));evidence.samples[name]=s;return s;};
+try{
+ await page.goto('http://127.0.0.1:5173');await page.waitForFunction(()=>window.demoState?.ready,null,{timeout:60000});
+ await page.selectOption('#quality','1');await page.waitForTimeout(2500);assert.equal((await sample('default')).resolution,'1440 × 1000');await page.screenshot({path:'evidence/default.png'});evidence.checks.push('Full viewport backing resolution verified');
+ const pt=await page.evaluate(()=>window.demoTest.project());await page.mouse.click(pt.x,pt.y);assert.equal(await page.locator('#selected-label').textContent(),'SUBJECT SELECTED / LIVE INSPECTION');evidence.checks.push('Reactor click selection');
+ const before=await page.evaluate(()=>window.demoTest.camera.getPosition().toString());await page.mouse.move(650,600);await page.mouse.down();await page.mouse.move(720,640,{steps:5});await page.mouse.up();const orbit=await page.evaluate(()=>window.demoTest.camera.getPosition().toString());assert.notEqual(before,orbit);
+ await page.mouse.move(650,600);await page.keyboard.down('Shift');await page.mouse.down();await page.mouse.move(680,620,{steps:4});await page.mouse.up();await page.keyboard.up('Shift');const pan=await page.evaluate(()=>window.demoTest.camera.getPosition().toString());assert.notEqual(orbit,pan);await page.mouse.wheel(0,250);await page.waitForTimeout(200);assert.notEqual(pan,await page.evaluate(()=>window.demoTest.camera.getPosition().toString()));await page.click('#reset');evidence.checks.push('Orbit, shift-pan, wheel zoom, reset');
+ await page.click('#pause');const paused=await page.evaluate(()=>window.demoState.time);await page.waitForTimeout(300);assert.equal(paused,await page.evaluate(()=>window.demoState.time));await page.click('#pause');await page.waitForTimeout(200);assert.ok(await page.evaluate(()=>window.demoState.time)>paused);evidence.checks.push('Pause / resume freezes scene animation');
+ for(const level of [0,100]){await page.locator('#complexity').fill(String(level));await page.waitForTimeout(1800);await sample(level===0?'low':'high');await page.screenshot({path:`evidence/complexity-${level}.png`});}
+ assert.ok(evidence.samples.high.instances>evidence.samples.low.instances);assert.equal(evidence.samples.high.instances,17580);assert.ok(evidence.samples.high.triangles>evidence.samples.low.triangles);evidence.checks.push('Complexity grows rendered instances and triangles; hard cap 17,580');
+ await page.selectOption('#quality','0.5');await page.waitForTimeout(600);assert.equal((await sample('halfResolution')).resolution,'720 × 500');assert.match(await page.locator('#quality-note').textContent(),/AO OFF/);evidence.checks.push('Manual 50% resolution and AO disable');
+ await page.selectOption('#quality','1');await page.selectOption('#quality','auto');await page.waitForTimeout(4200);await sample('adaptive');assert.ok(evidence.samples.adaptive.auto);if(evidence.samples.adaptive.wallMs>23)assert.ok(evidence.samples.adaptive.scale<1);evidence.checks.push('Adaptive resolution reduces automatically under observed high frame time');
+ await page.click('#tour');assert.ok(await page.evaluate(()=>window.demoState.tour));evidence.checks.push('Automatic orbit toggle');
+ await page.goto('http://127.0.0.1:5173/?backend=webgl');await page.waitForFunction(()=>window.demoState?.ready,null,{timeout:60000});await page.selectOption('#quality','0.75');await page.waitForTimeout(2000);assert.equal((await sample('webgl')).backend,'WebGL2');await page.screenshot({path:'evidence/webgl.png'});evidence.checks.push('WebGL2 fallback renders');
+ await page.setViewportSize({width:390,height:844});await page.waitForTimeout(500);await page.screenshot({path:'evidence/mobile.png'});evidence.checks.push('Mobile viewport layout screenshot');
+ assert.equal(errors.length,0,'Browser runtime / console errors');
+ evidence.status='passed';
+} catch(e){evidence.status='failed';evidence.failure=e.stack;throw e;}finally{fs.writeFileSync('evidence/test-results.json',JSON.stringify(evidence,null,2));await browser.close();console.log(JSON.stringify(evidence,null,2));}

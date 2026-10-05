@@ -1,0 +1,74 @@
+{
+  "title": "EXPO / City Pavilion",
+  "stack": "Rust 1.89 / Bevy 0.16.1 / wgpu / WebAssembly",
+  "backend": "WebGPU (BrowserWebGpu); explicit unsupported-browser screen, no WebGL fallback",
+  "techniques": [
+    "Furnished procedural pavilion and surrounding 32-building city",
+    "Articulated crowds following obstacle-aware aisle graph; Dijkstra destination routes",
+    "Day/night shadowed lighting, HDR bloom, illuminated windows and moving traffic"
+  ],
+  "limitations": [
+    "CPU-driven crowd; no pairwise pedestrian collision avoidance",
+    "HTML labels projected from Bevy world coordinates",
+    "Directional shadows; nine point lights do not cast shadows",
+    "Wall-frame RAF timing only, no GPU timestamps",
+    "Fixed native resolution does not reduce quality under load; manual/adaptive recovery opt-in"
+  ],
+  "localUrl": "http://127.0.0.1:5174/?scene=exhibition",
+  "publicUrl": "https://memorial-billing-integral-coat.trycloudflare.com/?scene=exhibition",
+  "defaultResolution": {
+    "scale": 1,
+    "pixelRatio": "native window.devicePixelRatio (uncapped)",
+    "adaptive": false,
+    "backingFormula": "round(CSS width * devicePixelRatio) \u00d7 round(CSS height * devicePixelRatio)",
+    "verifiedCssViewport": [
+      1440,
+      960
+    ],
+    "verifiedDevicePixelRatio": 2,
+    "verifiedBacking": [
+      2880,
+      1920
+    ],
+    "manual50PercentBacking": [
+      1440,
+      960
+    ]
+  },
+  "defaultPeople": 120,
+  "maxPeople": 1200,
+  "testSummary": "PASS: isolated Chrome, 1440x960 CSS viewport at DPR 2, actual 2880x1920 backing at 120 and 1200 walkers, fixed 100%, adaptive OFF. Backing unchanged during CPU stress. Manual 50%=1440x960. Resize 1200x800 at DPR2=>2400x1600; live DPR1.5=>2160x1440. Day/night, overhead/orbit/pan/zoom/reset, animated walking, booth/facility routes avoiding footprints, projected-label and CSS floor picking, cutaway, pause and recovery passed. Original scene preserved and also verified 2880x1920 at max load. Zero engine/browser errors and failed requests. Day/night/max/detail screenshots inspected. Unsupported-WebGPU explanations passed for both scenes. Public query HTML and gzip WASM HTTP 200. Automated browsers closed.",
+  "status": "ready",
+  "runCommand": "npm start",
+  "buildCommand": "npm run build",
+  "defaultComplexity": 35,
+  "defaultNight": false,
+  "defaultCamera": {
+    "position": [
+      85,
+      95,
+      -105
+    ],
+    "target": [
+      0,
+      0,
+      0
+    ],
+    "verticalFovDegrees": 45
+  },
+  "evidence": [
+    "tests/exhibition-results.json",
+    "tests/exhibition-day.png",
+    "tests/exhibition-night.png",
+    "tests/exhibition-max-day.png",
+    "tests/exhibition-max-night.png",
+    "tests/exhibition-route.png",
+    "tests/exhibition-detail.png",
+    "tests/compatibility.json",
+    "tests/exhibition-tunnel-headers.txt",
+    "tests/exhibition-wasm-headers.txt"
+  ],
+  "screenshot": "tests/exhibition-day.png",
+  "nightScreenshot": "tests/exhibition-night.png",
+  "tunnelRestartCommand": "bash scripts/tunnel.sh"
+}
